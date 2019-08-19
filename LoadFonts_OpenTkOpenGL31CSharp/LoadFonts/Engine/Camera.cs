@@ -15,7 +15,8 @@ namespace Engine
         private Matrix4 _viewMatrix;
         private Matrix4 _projMatrix;
         private Matrix4 _vpMatrix;
-        private Color4 _bgColor = new Color4(0.8f, 0.8f, 0.8f, 1f);
+
+        public Color4 BackgroundColor { get; set; }
 
         public Camera(Vector2 wcCenter, float wcWidth, Vector4 viewport)
         {
@@ -28,6 +29,8 @@ namespace Engine
             _viewMatrix = Matrix4.Identity;
             _projMatrix = Matrix4.Identity;
             _vpMatrix = Matrix4.Identity;
+
+            BackgroundColor = new Color4(0.8f, 0.8f, 0.8f, 1f);
         }
 
         public Matrix4 VPMatrix
@@ -46,7 +49,7 @@ namespace Engine
             GL.Scissor(
                 (int)_viewport[0], (int)_viewport[1],
                 (int)_viewport[2], (int)_viewport[3]);
-            GL.ClearColor(_bgColor);
+            GL.ClearColor(BackgroundColor);
             GL.Enable(EnableCap.ScissorTest);
             GL.Clear(ClearBufferMask.ColorBufferBit);
             GL.Disable(EnableCap.ScissorTest);

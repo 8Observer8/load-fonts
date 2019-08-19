@@ -1,8 +1,6 @@
 ﻿
 using System;
 using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
 using Engine;
 
 namespace LoadFonts
@@ -11,20 +9,15 @@ namespace LoadFonts
     {
         Scene _scene;
 
-        //private FontRenderable _textSysFont = new FontRenderable("System Font: in Red");
-        //private FontRenderable _textCon16 = new FontRenderable("Consolas 16: in black");
-        //private FontRenderable _textCon24 = new FontRenderable("Consolas 24: in black");
-
-        //private TextureRenderable _tank;
-
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
 
+            Title = "Font, OpenGL 3.1, C#";
             Width = 400;
             Height = 400;
 
-            _scene = new Scene();
+            _scene = new Scene(Width, Height);
             EngineCore.Instance.Initialize(_scene);
         }
 
@@ -33,6 +26,8 @@ namespace LoadFonts
             base.OnRenderFrame(e);
 
             _scene.Draw();
+
+            SwapBuffers();
         }
     }
 }

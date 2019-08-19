@@ -1,5 +1,6 @@
 ﻿
 using OpenTK;
+using OpenTK.Graphics;
 
 namespace Engine
 {
@@ -53,6 +54,18 @@ namespace Engine
                 CharacterInfo charInfo = Fonts.Instance.GetCharInfo(_fontName, "A"[0]);
                 float w = h * charInfo.CharAspectRatio;
                 XForm.SetSize(w * _text.Length, h);
+            }
+        }
+
+        public Color4 Color
+        {
+            get
+            {
+                return _oneChar.Color;
+            }
+            set
+            {
+                _oneChar.Color = value;
             }
         }
 

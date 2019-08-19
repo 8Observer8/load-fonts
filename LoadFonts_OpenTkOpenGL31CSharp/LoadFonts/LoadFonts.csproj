@@ -82,6 +82,9 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Assets\Fonts\font.fnt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Assets\Fonts\system-default-font.fnt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -99,6 +102,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Fonts\font.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Fonts\system-default-font.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

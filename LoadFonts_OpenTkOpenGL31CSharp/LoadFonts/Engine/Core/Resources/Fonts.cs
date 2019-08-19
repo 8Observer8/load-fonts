@@ -1,5 +1,4 @@
 ﻿
-using System.IO;
 using System.Xml;
 
 namespace Engine
@@ -45,12 +44,40 @@ namespace Engine
         public CharacterInfo GetCharInfo(string fontName, int aChar)
         {
             XmlDocument xmlContent = (ResourceMap.Instance.RetrieveAsset(fontName) as CharacterAsset).XmlAsset.XmlContent;
+            XmlElement xRoot = xmlContent.DocumentElement;
 
-            string charPath = string.Format("font/chars/char[@id=\"{0}\"]", aChar);
+            string fontImageName = (ResourceMap.Instance.RetrieveAsset(fontName) as CharacterAsset).FontImageName;
+            TextureInfo texInfo = Textures.Instance.GetTextureInfo(fontImageName).TextureInfo;
 
+            string charPath = string.Format("/font/chars/char[@id=\"{0}\"]", aChar);
+            XmlNode charNode = xRoot.SelectSingleNode(charPath);
+            int x = int.Parse(charNode.SelectSingleNode("@x").Value);
+            int y = int.Parse(charNode.SelectSingleNode("@y").Value);
+            int width = int.Parse(charNode.SelectSingleNode("@width").Value);
+            int height = int.Parse(charNode.SelectSingleNode("@height").Value);
 
+            int leftPixel = x;
+            int rightPixel = leftPixel + width - 1;
+            int topPixel = (texInfo.Height - 1) - y;
+            int bottomPixel = topPixel - height + 1;
 
             CharacterInfo returnInfo = new CharacterInfo();
+            returnInfo.TexCoordLeft = leftPixel / (float) (texInfo.Width - 1);
+            returnInfo.TexCoordTop = topPixel / (float)(texInfo.Height - 1);
+            returnInfo.TexCoordRight = rightPixel / (float)(texInfo.Width - 1);
+            returnInfo.TexCoordBottom = bottomPixel / (float)(texInfo.Height - 1);
+
+            XmlNode commonNode = xRoot.SelectSingleNode("/font/common");
+            int charHeight = int.Parse(commonNode.SelectSingleNode("@base").Value);
+            int charWidth = int.Parse(charNode.SelectSingleNode("@xadvance").Value);
+            int xOffset = int.Parse(charNode.SelectSingleNode("@xoffset").Value);
+            int yOffset = int.Parse(charNode.SelectSingleNode("@yoffset").Value);
+            returnInfo.CharWidth = width / (float)charWidth;
+            returnInfo.CharHeight = height / (float)charHeight;
+            returnInfo.CharWidthOffset = xOffset / (float)charWidth;
+            returnInfo.CharHeightOffset = yOffset / (float)charHeight;
+            returnInfo.CharAspectRatio = charWidth / (float)charHeight;
+
             return returnInfo;
         }
 

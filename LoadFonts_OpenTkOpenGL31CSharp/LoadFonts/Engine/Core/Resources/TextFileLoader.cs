@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using System.Xml;
 
-
 namespace Engine
 {
     enum FileType
@@ -29,7 +28,7 @@ namespace Engine
             }
         }
 
-        public async void LoadTextFile(string fileName, FileType fileType, Action<string> callback = null)
+        public void LoadTextFile(string fileName, FileType fileType, Action<string> callback = null)
         {
             if (!ResourceMap.Instance.IsAssetLoaded(fileName))
             {
@@ -39,7 +38,7 @@ namespace Engine
                 {
                     using (StreamReader sr = new StreamReader(fileName))
                     {
-                        string fileContent = await sr.ReadToEndAsync();
+                        string fileContent = sr.ReadToEnd();
                         var c = GraphicsContext.CurrentContext;
 
                         if (fileType == FileType.TextFile)
